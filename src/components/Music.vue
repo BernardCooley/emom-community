@@ -12,15 +12,10 @@
                     Tracks
                 </ion-card-header>
 
-                <ion-list v-for="(track, index) of musicFiles">
-                    <div class="trackContainer">
-                        <h4>{{track.artist}} - {{track.trackName}}</h4>
-                        <audio controls class="track">
-                            <source v-bind:src='track.url' type="audio/mpeg"> 
-                            Your browser does not support the audio element.
-                        </audio>
-                        <ion-button>Save</ion-button>
-                        <ion-button>More info</ion-button>
+                <ion-list v-for="(track, index) in Tracks" v-bind:data="track" v-bind:key="track.index">
+
+                    <div id="audio" class="player-wrapper">
+                        <audio-player v-bind:file='track.url' v-bind:artist='track.artist' v-bind:trackName='track.trackName'></audio-player>
                     </div>
                 </ion-list>
             </ion-card>
@@ -30,47 +25,17 @@
 
 <script>
 
+import Tracks from '../db/tracks.json'
+import AudioPlayer from './AudioPlayer'
+
 export default {
     data() {
         return {
-            musicFiles: [
-                {
-                    "artist": "Tape Twelve",
-                    "trackName": "Slice",
-                    "url": "../assets/music/tape_twelve_slice.mp3"
-                },
-                {
-                    "artist": "Tape Twelve",
-                    "trackName": "Temper",
-                    "url": "../assets/music/tape_twelve_temper.mp3"
-                },
-                {
-                    "artist": "Tape Twelve",
-                    "trackName": "Temper",
-                    "url": "../assets/music/tape_twelve_temper.mp3"
-                },
-                {
-                    "artist": "Tape Twelve",
-                    "trackName": "Temper",
-                    "url": "../assets/music/tape_twelve_temper.mp3"
-                },
-                {
-                    "artist": "Tape Twelve",
-                    "trackName": "Temper",
-                    "url": "../assets/music/tape_twelve_temper.mp3"
-                },
-                {
-                    "artist": "Tape Twelve",
-                    "trackName": "Temper",
-                    "url": "../assets/music/tape_twelve_temper.mp3"
-                },
-                {
-                    "artist": "Tape Twelve",
-                    "trackName": "Temper",
-                    "url": "../assets/music/tape_twelve_temper.mp3"
-                }
-            ]
+            Tracks
         }
+    },
+    components: {
+        AudioPlayer
     }
 }
 

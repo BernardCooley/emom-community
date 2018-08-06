@@ -26,12 +26,20 @@ module.exports = {
         }
       },
       {
+        test: /\.scss$/,
+        use: [
+          'vue-style-loader',
+          'css-loader',
+          'sass-loader'
+        ]
+      },
+      {
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: /node_modules/
       },
       {
-        test: /\.(png|jpg|gif|svg|mp3|mpeg|wav)$/,
+        test: /\.(png|jpg|gif|svg|mp3|mpeg|wav|ogg)$/,
         loader: 'file-loader',
         options: {
           name: '[name].[ext]?[hash]'

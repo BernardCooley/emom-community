@@ -9,6 +9,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router';
 
 import Music from './components/Music'
+import AudioPlayer from './components/AudioPlayer'
 
 Vue.use(VueRouter);
 
