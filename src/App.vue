@@ -11,12 +11,14 @@ import VueRouter from 'vue-router';
 import Music from './components/Music'
 import AudioPlayer from './components/AudioPlayer'
 import Login from './components/Login'
+import Register from './components/Register'
 
 Vue.use(VueRouter);
 
 const routes = [
   { path: '/music', component: Music },
-  { path: '/login', component: Login }
+  { path: '/login', component: Login },
+  { path: '/register', component: Register }
 ]
 
 export default new VueRouter({ routes })
