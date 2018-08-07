@@ -1,16 +1,10 @@
 <template>
     <div class="navigationContainer">
-        <ul>
-            <li>
-                <ion-button v-on:click="login">Login</ion-button>
-            </li>
-            <li>
-                <ion-button v-on:click="register">Register</ion-button>
-            </li>
-            <li>
-                <ion-button v-on:click="logout">Logout</ion-button>
-            </li>
-        </ul>
+        <div class="navItemsContainer">
+            <ion-button class="navButton" v-on:click="login">Login</ion-button>
+            <ion-button class="navButton" v-on:click="register">Register</ion-button>
+            <ion-button class="navButton" v-if="isLoggedIn" v-on:click="logout">Logout</ion-button>
+        </div>
     </div>
 </template>
 
@@ -21,7 +15,16 @@ export default {
     data() {
         return {
             isLoggedIn: false,
-            currentUser: false
+            currentUser: null
+        }
+    },
+    created() {
+        console.log(firebase.auth().currentUser)
+        if(firebase.auth().currentUser) {
+            this.isLoggedIn = true
+            this.currentUser = firebase.auth().currentUser.artistName
+            console.log(firebase.auth().currentUser)
+            console.log('firebase.auth().currentUser')
         }
     },
     methods: {
@@ -45,33 +48,25 @@ export default {
 </script>
 
 <style>
-
 .navigationContainer {
     height: 50px;
-    z-index: 2;
+    z-index: 1;
     position: fixed;
     bottom: 0;
     width: 100%;
 }
 
-.navigationContainer ul {
+.navItemsContainer {
     width: 100%;
     height: 100%;
-    z-index: 1;
     padding: 0;
     margin: 0;
-    font-family: Roboto,"Helvetica Neue",sans-serif;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
     display: flex;
-    list-style: none;
 }
 
-.navigationContainer ul li {
-    width: 33.333%;
-}
-
-.navigationContainer ul li button {
+.navButton {
     width: 100%;
-    text-decoration: none;
     height: 100%;
     border-radius: 0;
     padding: 0;
