@@ -1,29 +1,22 @@
 <template>
-  <ion-app>
-    <router-view></router-view>
-  </ion-app>
+  <div class="appContainer">
+    <navigation />
+    <ion-app>
+      <router-view />
+    </ion-app>
+  </div>
 </template>
 
 <script>
-import Vue from 'vue'
-import VueRouter from 'vue-router';
+import Navigation from './components/Navigation'
 
-import Music from './components/Music'
-import AudioPlayer from './components/AudioPlayer'
-import Login from './components/Login'
-import Register from './components/Register'
-import AddTrack from './components/AddTrack'
+export default {
+  components: {
+    Navigation
+  }
+}
 
-Vue.use(VueRouter);
 
-const routes = [
-  { path: '/music', component: Music },
-  { path: '/login', component: Login },
-  { path: '/register', component: Register },
-  { path: '/add-track', component: AddTrack }
-]
-
-export default new VueRouter({ routes })
 </script>
 
 <style>
