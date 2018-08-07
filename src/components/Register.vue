@@ -11,22 +11,46 @@
 
                 <ion-list>
                     <ion-item>
-                        <label for="artistName">Artist name / alias</label>
-                        <input type="text" id="artistName" v-model="user.artistName">
+                        
+                        <ion-label for="artistName">Artist name</ion-label>
+                        <ion-input type="text" id="artistName" v-bind:value="user.artistName.value" v-on:input="user.artistName.value = $event.target.value"></ion-input>
+                        <div v-for="(errorMessage) in user.artistName.errors" v-bind:data="errorMessage" v-bind:key="errorMessage.index">
+                            <span class="validationMessage">{{errorMessage}}</span>
+                        </div>
                     </ion-item>
 
                     <ion-item>
-                        <label for="email">Email address</label>
-                        <input type="email" id="email" v-model="user.email">
+                        <ion-label for="email">Email</ion-label>
+                        <ion-input type="email" id="email" v-bind:value="user.email.value" v-on:input="user.email.value = $event.target.value"></ion-input>
+                        <div v-for="(errorMessage) in user.email.errors" v-bind:data="errorMessage" v-bind:key="errorMessage.index">
+                            <span class="validationMessage">{{errorMessage}}</span>
+                        </div>
                     </ion-item>
 
                     <ion-item>
-                        <label for="password">Choose a password</label>
-                        <input type="password" id="password" v-model="user.password">
+                        <ion-label for="password">Password</ion-label>
+                        <ion-input type="password" id="password" v-bind:value="user.password.value" v-on:input="user.password.value = $event.target.value"></ion-input>
+                        <div v-for="(errorMessage) in user.password.errors" v-bind:data="errorMessage" v-bind:key="errorMessage.index">
+                            <span class="validationMessage">{{errorMessage}}</span>
+                        </div>
                     </ion-item>
+
                     <ion-item>
-                        <ion-button v-on:click="register">Register</ion-button>
+                        <ion-label for="passwordConfirm">Confirm password</ion-label>
+                        <ion-input type="password" id="passwordConfirm" v-bind:value="user.passwordConfirm.value" v-on:input="user.passwordConfirm.value = $event.target.value"></ion-input>
+                        <div v-for="(errorMessage) in user.passwordConfirm.errors" v-bind:data="errorMessage" v-bind:key="errorMessage.index">
+                            <span class="validationMessage">{{errorMessage}}</span>
+                        </div>
                     </ion-item>
+              
+                    <ion-button v-on:click="register">Register</ion-button>
+
+                    <span>{{registerMessage}}</span>
+
+                    <!-- <div class="errorsContainer" v-if="errorsBool">
+                        Errors
+                    </div> -->
+           
                 </ion-list>
             </ion-content>
         </ion-page>
@@ -34,43 +58,124 @@
 </template>
 
 <script>
-import db from '../firestore/firebaseInit'
-import firebase from 'firebase'
+import db from "../firestore/firebaseInit";
+import firebase from "firebase";
 
 export default {
   data() {
-      return {
-        user: {}
-      }
+    return {
+      user: {
+        artistName: {
+          value: "",
+          errors: []
+        },
+        email: {
+          value: "",
+          errors: []
+        },
+        password: {
+          value: "",
+          errors: []
+        },
+        passwordConfirm: {
+          value: "",
+          errors: []
+        }
+      },
+      errors: [],
+      errorsBool: null,
+      userID: null,
+      registerMessage: null
+    };
   },
   methods: {
+    validation: function(e) {
+      this.errorsBool = false;
+      this.user.artistName.errors = [];
+      this.user.email.errors = [];
+      this.user.password.errors = [];
+      this.user.passwordConfirm.errors = [];
+
+      if (!this.user.artistName.value) {
+        this.user.artistName.errors.push("Artist name required.");
+      }
+      if (!this.user.email.value) {
+        this.user.email.errors.push("Email required.");
+      }
+
+      var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      if (!emailRegex.test(this.user.email.value)) {
+        this.user.email.errors.push("Invalid email format.");
+      }
+
+      if (this.user.password.value.length < 6) {
+        this.user.password.errors.push("Minimum 6 characters.");
+      }
+
+      if (!this.user.password.value) {
+        this.user.password.errors.push("Password required.");
+      }
+
+      if (this.user.password.value != this.user.passwordConfirm.value) {
+        this.user.passwordConfirm.errors.push("Password does not match.");
+      }
+
+      if (!this.user.passwordConfirm.value) {
+        this.user.passwordConfirm.errors.push(
+          "Password confirmation required."
+        );
+      }
+
+      for (var x in this.user) {
+        if (this.user[x].errors.length > 0) {
+          this.errorsBool = true;
+        }
+      }
+    },
     register: function() {
-
-        firebase.auth().createUserWithEmailAndPassword(this.user.email, this.user.password)
-        .then(
-            user => {
-                alert('Account create for' + this.user.artistName)
-                this.$router.push('/music')
-            },
-            err => {
-                alert(err.message)
-            }
+      this.validation();
+      if (!this.errorsBool) {
+        console.log("registering.....");
+        this.registerUser();
+      } else {
+      }
+    },
+    registerUser: function() {
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(
+          this.user.email.value,
+          this.user.password.value
         )
-
-
-
-        // db.collection('users').add({
-        //     artistName: this.user.artistName,
-        //     email: this.user.email,
-        //     password: this.user.password
-        // })
-        // .then(docRef => this.$router.push('/'))
-        // .catch(error => console.log(err))
+        .then(data => {
+          this.createUserAccount(data.user.uid);
+        });
+    },
+    createUserAccount: function(userID) {
+      db
+        .collection("users")
+        .add({
+          userID: userID,
+          artistName: this.user.artistName.value,
+          email: this.user.email.value,
+          password: this.user.password.value
+        })
+        .then(data => {
+          if (data.id) {
+            this.registerMessage = "Registration successful";
+            this.$router.push("/music");
+            this.registerMessage = null
+          }
+        })
+        .catch(error => console.log(err));
     }
   }
-}
+};
 </script>
 
 <style>
-
+.validationMessage {
+  color: red;
+  text-align: center;
+}
 </style>

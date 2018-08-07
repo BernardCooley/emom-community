@@ -11,18 +11,23 @@
 
                 <ion-list>
                     <ion-item>
-                        <label for="username">Username</label>
-                        <input type="text" id="username" v-model="user.name">
+                        <ion-label for="email">Email</ion-label>
+                        <ion-input type="text" id="email" v-bind:value="user.email" v-on:input="user.email = $event.target.value"></ion-input>
                     </ion-item>
 
                     <ion-item>
-                        <label for="password">Password</label>
-                        <input type="password" id="password" v-model="user.password">
+                        <ion-label for="password">Password</ion-label>
+                        <ion-input type="password" id="password" v-bind:value="user.password" v-on:input="user.password = $event.target.value"></ion-input>
                     </ion-item>
+
                     <ion-item>
                         <ion-button v-on:click="login">Log In</ion-button>
                     </ion-item>
                 </ion-list>
+
+                {{user.password}}
+                {{user.email}}
+
             </ion-content>
         </ion-page>
     </div>
@@ -33,15 +38,12 @@ export default {
 
     data: function() {
         return {
-            user: {
-                name: '',
-                password: ''
-            }
+            user: {}
         }
     },
     methods: {
         login: function() {
-            console.log(this.user.name, this.user.password);
+            console.log(this.user.email, this.user.password);
         }
     }
 }
