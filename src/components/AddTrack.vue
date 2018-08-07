@@ -110,6 +110,7 @@ export default {
     addTrack: function() {
       this.validation();
       if (!this.errorsBool) {
+        console.log('Adding track.....')
         db
           .collection("tracks")
           .add({
@@ -133,4 +134,8 @@ export default {
 </script>
 
 <style>
+.validationMessage {
+  color: red;
+  text-align: center;
+}
 </style>

@@ -6,31 +6,24 @@
             </ion-toolbar>
         </ion-header>
 
-        <ion-content class="content">
-
-            <!--<ion-card-header><h2>Shared tracks</h2></ion-card-header>-->
-
-            <ion-list v-for="(track, index) in Tracks" v-bind:data="track" v-bind:key="track.index">
+        <ion-content class="content" v-if="dataLoaded">
+            <ion-list v-for="(track, index) in tracks" v-bind:data="track" v-bind:key="track.index">
                 <ion-card class="ionCard">
                     <ion-card-header>
                         <h4>Artist: {{track.artist}}</h4>
-                        <h4>Title: {{track.trackName}}</h4>
+                        <h4>Title: {{track.title}}</h4>
                     </ion-card-header>
                     <div id="audio" class="player-wrapper">
-                        <audio-player v-bind:file='track.url' v-bind:artist='track.artist' v-bind:trackName='track.trackName' v-bind:artworkUrl='track.artworkUrl'></audio-player>
+                        <audio-player v-bind:file='track.trackUrl' v-bind:artist='track.artist' v-bind:title='track.title' v-bind:artworkUrl='track.artworkUrl'></audio-player>
                     </div>
                 </ion-card>
             </ion-list>
-
-            <ion-button v-on:click="getTrackData"></ion-button>
-
         </ion-content>
     </ion-page>
 </template>
 
 <script>
 
-import Tracks from '../db/tracks.json'
 import AudioPlayer from './AudioPlayer'
 import db from "../firestore/firebaseInit";
 import firebase from "firebase";
@@ -38,18 +31,37 @@ import firebase from "firebase";
 export default {
     data() {
         return {
-            Tracks
+            tracks: [],
+            dataLoaded: false
         }
     },
     components: {
         AudioPlayer
     },
     methods: {
-        getTrackData: function() {
-            db.collection("tracks").where('artist', '==', 'Tape Twelve').get().then(doc => {
-                console.log(doc)
+        loadTracks: function() {
+            this.tracks = []
+            db.collection('tracks').get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+                    const data = {
+                        'artist': doc.data().artist,
+                        'title': doc.data().title,
+                        'trackUrl': doc.data().trackUrl,
+                        'artworkUrl': doc.data().artworkUrl
+                    }
+                    this.tracks.push(data)
+                })
+                if(this.tracks) {
+                    this.dataLoaded = true
+                }
             })
         }
+    },
+    beforeCreate() {
+
+    },
+    created() {
+        this.loadTracks();
     }
 }
 

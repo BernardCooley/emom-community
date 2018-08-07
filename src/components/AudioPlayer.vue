@@ -51,7 +51,9 @@
 				<span>Vol</span>
 				<input class="volumeControl slider" v-model.lazy.number="volume" type="range" min="0" max="100" />
 			</div>
-			<audio :loop="innerLoop" ref="audiofile" :src="file" preload="auto" style="display: none;"></audio>
+			<audio v-bind:loop="innerLoop" ref="audiofile" preload="auto" style="display: none;">
+				<source v-bind:src="file"></source>
+			</audio>
 		</div>
 	</div>
 </template>
@@ -83,7 +85,7 @@ export default {
 			type: String,
 			default: null
 		},
-		trackName: {
+		title: {
 			type: String,
 			default: null
 		},
@@ -92,17 +94,19 @@ export default {
 			default: null
 		}
 	},
-	data: () => ({
-		audio: undefined,
-		currentSeconds: 0,
-		durationSeconds: 0,
-		innerLoop: false,
-		loaded: false,
-		playing: false,
-		previousVolume: 35,
-		showVolume: false,
-		volume: 100
-	}),
+	data () {
+		return {
+			audio: undefined,
+			currentSeconds: 0,
+			durationSeconds: 0,
+			innerLoop: false,
+			loaded: false,
+			playing: false,
+			previousVolume: 35,
+			showVolume: false,
+			volume: 100
+		}
+	},
 	computed: {
 		currentTime() {
 			return convertTimeHHMMSS(this.currentSeconds);
