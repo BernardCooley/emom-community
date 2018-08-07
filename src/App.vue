@@ -12,13 +12,15 @@ import Music from './components/Music'
 import AudioPlayer from './components/AudioPlayer'
 import Login from './components/Login'
 import Register from './components/Register'
+import AddTrack from './components/AddTrack'
 
 Vue.use(VueRouter);
 
 const routes = [
   { path: '/music', component: Music },
   { path: '/login', component: Login },
-  { path: '/register', component: Register }
+  { path: '/register', component: Register },
+  { path: '/add-track', component: AddTrack }
 ]
 
 export default new VueRouter({ routes })

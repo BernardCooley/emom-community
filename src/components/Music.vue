@@ -22,6 +22,8 @@
                 </ion-card>
             </ion-list>
 
+            <ion-button v-on:click="getTrackData"></ion-button>
+
         </ion-content>
     </ion-page>
 </template>
@@ -30,6 +32,8 @@
 
 import Tracks from '../db/tracks.json'
 import AudioPlayer from './AudioPlayer'
+import db from "../firestore/firebaseInit";
+import firebase from "firebase";
 
 export default {
     data() {
@@ -39,6 +43,13 @@ export default {
     },
     components: {
         AudioPlayer
+    },
+    methods: {
+        getTrackData: function() {
+            db.collection("tracks").where('artist', '==', 'Tape Twelve').get().then(doc => {
+                console.log(doc)
+            })
+        }
     }
 }
 

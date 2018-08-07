@@ -12,43 +12,96 @@
                 <ion-list>
                     <ion-item>
                         <ion-label for="email">Email</ion-label>
-                        <ion-input type="text" id="email" v-bind:value="user.email" v-on:input="user.email = $event.target.value"></ion-input>
+                        <ion-input type="text" id="email" v-bind:value="user.email.value" v-on:input="user.email.value = $event.target.value"></ion-input>
+                        <div v-for="(errorMessage) in user.email.errors" v-bind:data="errorMessage" v-bind:key="errorMessage.index">
+                            <span class="validationMessage">{{errorMessage}}</span>
+                        </div>
                     </ion-item>
 
                     <ion-item>
                         <ion-label for="password">Password</ion-label>
-                        <ion-input type="password" id="password" v-bind:value="user.password" v-on:input="user.password = $event.target.value"></ion-input>
+                        <ion-input type="password" id="password" v-bind:value="user.password.value" v-on:input="user.password.value = $event.target.value"></ion-input>
+                        <div v-for="(errorMessage) in user.password.errors" v-bind:data="errorMessage" v-bind:key="errorMessage.index">
+                            <span class="validationMessage">{{errorMessage}}</span>
+                        </div>
                     </ion-item>
 
-                    <ion-item>
-                        <ion-button v-on:click="login">Log In</ion-button>
-                    </ion-item>
+                    <ion-button v-on:click="login">Log In</ion-button>
                 </ion-list>
-
-                {{user.password}}
-                {{user.email}}
-
             </ion-content>
         </ion-page>
     </div>
 </template>
 
 <script>
-export default {
+import db from "../firestore/firebaseInit";
+import firebase from "firebase";
 
-    data: function() {
-        return {
-            user: {}
+export default {
+  data() {
+    return {
+      user: {
+        email: {
+          value: null,
+          errors: []
+        },
+        password: {
+          value: null,
+          errors: []
         }
+      },
+      errorsBool: null,
+      userID: null,
+      loginMessage: null
+    };
+  },
+  methods: {
+    validation: function(e) {
+      this.errorsBool = false;
+      this.user.email.errors = [];
+      this.user.password.errors = [];
+
+      if (!this.user.email.value) {
+        this.user.email.errors.push("Email required.");
+      }
+
+      var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      if (!emailRegex.test(this.user.email.value)) {
+        this.user.email.errors.push("Invalid email format.");
+      }
+
+      if (!this.user.password.value) {
+        this.user.password.errors.push("Password required.");
+      }
+
+      console.log(this.user);
+
+      for (var x in this.user) {
+        if (this.user[x].errors.length > 0) {
+          this.errorsBool = true;
+        }
+      }
     },
-    methods: {
-        login: function() {
-            console.log(this.user.email, this.user.password);
-        }
+    login: function() {
+      this.validation();
+      if (!this.errorsBool) {
+        console.log("Logging in.....");
+
+        firebase
+          .auth()
+          .signInWithEmailAndPassword(
+            this.user.email.value,
+            this.user.password.value
+          )
+          .then(data => {
+            this.$router.push("/music");
+            console.log(data.user.uid);
+          });
+      }
     }
-}
+  }
+};
 </script>
 
 <style>
-
 </style>

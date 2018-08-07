@@ -82,7 +82,6 @@ export default {
           errors: []
         }
       },
-      errors: [],
       errorsBool: null,
       userID: null,
       registerMessage: null
@@ -137,7 +136,6 @@ export default {
       if (!this.errorsBool) {
         console.log("registering.....");
         this.registerUser();
-      } else {
       }
     },
     registerUser: function() {
