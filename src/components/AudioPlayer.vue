@@ -67,7 +67,7 @@ const convertTimeHHMMSS = (val) => {
 };
 
 export default {
-	name: 'AudioPlayer',
+	name: 'audio-player',
 	props: {
 		file: {
 			type: String,
@@ -94,7 +94,7 @@ export default {
 			default: null
 		}
 	},
-	data () {
+	data: function() {
 		return {
 			audio: undefined,
 			currentSeconds: 0,

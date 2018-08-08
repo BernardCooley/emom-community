@@ -38,7 +38,8 @@ import db from "../firestore/firebaseInit";
 import firebase from "firebase";
 
 export default {
-  data() {
+  name: 'login',
+  data: function() {
     return {
       user: {
         email: {
@@ -95,7 +96,6 @@ export default {
           )
           .then(data => {
             this.$router.push("/music");
-            console.log(data.user.uid);
           });
       }
     }

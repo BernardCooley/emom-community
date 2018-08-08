@@ -29,7 +29,8 @@ import db from "../firestore/firebaseInit";
 import firebase from "firebase";
 
 export default {
-    data() {
+    name: 'music',
+    data: function() {
         return {
             tracks: [],
             dataLoaded: false

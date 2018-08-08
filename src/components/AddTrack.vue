@@ -54,7 +54,8 @@ import db from "../firestore/firebaseInit";
 import firebase from "firebase";
 
 export default {
-  data() {
+  name: 'add-track',
+  data: function() {
     return {
       track: {
         artist: {

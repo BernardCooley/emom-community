@@ -62,7 +62,8 @@ import db from "../firestore/firebaseInit";
 import firebase from "firebase";
 
 export default {
-  data() {
+  name: 'register',
+  data: function() {
     return {
       user: {
         artistName: {
@@ -131,11 +132,12 @@ export default {
         }
       }
     },
-    register: function() {
+    register: function(e) {
       this.validation();
       if (!this.errorsBool) {
         console.log("registering.....");
         this.registerUser();
+        e.preventDefault()
       }
     },
     registerUser: function() {
@@ -147,16 +149,14 @@ export default {
         )
         .then(data => {
           this.createUserAccount(data.user.uid);
-        });
+        })
     },
     createUserAccount: function(userID) {
       db
         .collection("users")
         .add({
           userID: userID,
-          artistName: this.user.artistName.value,
-          email: this.user.email.value,
-          password: this.user.password.value
+          artistName: this.user.artistName.value
         })
         .then(data => {
           if (data.id) {

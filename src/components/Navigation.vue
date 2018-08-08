@@ -1,8 +1,8 @@
 <template>
     <div class="navigationContainer">
         <div class="navItemsContainer">
-            <ion-button class="navButton" v-on:click="login">Login</ion-button>
-            <ion-button class="navButton" v-on:click="register">Register</ion-button>
+            <ion-button class="navButton" v-if="!isLoggedIn" v-on:click="login">Login</ion-button>
+            <ion-button class="navButton" v-if="!isLoggedIn" v-on:click="register">Register</ion-button>
             <ion-button class="navButton" v-if="isLoggedIn" v-on:click="logout">Logout</ion-button>
         </div>
     </div>
@@ -12,19 +12,17 @@
 import firebase from "firebase"
 
 export default {
-    data() {
+    name: 'navigation',
+    data: function() {
         return {
             isLoggedIn: false,
             currentUser: null
         }
     },
     created() {
-        console.log(firebase.auth().currentUser)
         if(firebase.auth().currentUser) {
             this.isLoggedIn = true
             this.currentUser = firebase.auth().currentUser.artistName
-            console.log(firebase.auth().currentUser)
-            console.log('firebase.auth().currentUser')
         }
     },
     methods: {
