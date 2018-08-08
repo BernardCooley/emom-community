@@ -1,41 +1,42 @@
 <template>
-    <div class="loginContainer">
-        <ion-page>
-            <ion-header>
-                <ion-toolbar class="toolbar-md-primary">
-                    <ion-title>Login</ion-title>
-                </ion-toolbar>
-            </ion-header>
+  <div class="loginContainer">
+    <ion-page>
+      <ion-header>
+        <ion-toolbar class="toolbar-md-primary">
+          <ion-title>Login</ion-title>
+        </ion-toolbar>
+      </ion-header>
 
-            <ion-content class="content">
+      <ion-content class="content">
 
-                <ion-list>
-                    <ion-item>
-                        <ion-label for="email">Email</ion-label>
-                        <ion-input type="text" id="email" v-bind:value="user.email.value" v-on:input="user.email.value = $event.target.value"></ion-input>
-                        <div v-for="(errorMessage) in user.email.errors" v-bind:data="errorMessage" v-bind:key="errorMessage.index">
-                            <span class="validationMessage">{{errorMessage}}</span>
-                        </div>
-                    </ion-item>
+        <ion-list>
+          <ion-item>
+            <ion-label for="email">Email</ion-label>
+            <ion-input type="text" id="email" v-bind:value="user.email.value" v-on:input="user.email.value = $event.target.value"></ion-input>
+            <div v-for="(errorMessage) in user.email.errors" v-bind:data="errorMessage" v-bind:key="errorMessage.index">
+              <span class="validationMessage">{{errorMessage}}</span>
+            </div>
+          </ion-item>
 
-                    <ion-item>
-                        <ion-label for="password">Password</ion-label>
-                        <ion-input type="password" id="password" v-bind:value="user.password.value" v-on:input="user.password.value = $event.target.value"></ion-input>
-                        <div v-for="(errorMessage) in user.password.errors" v-bind:data="errorMessage" v-bind:key="errorMessage.index">
-                            <span class="validationMessage">{{errorMessage}}</span>
-                        </div>
-                    </ion-item>
+          <ion-item>
+            <ion-label for="password">Password</ion-label>
+            <ion-input type="password" id="password" v-bind:value="user.password.value" v-on:input="user.password.value = $event.target.value"></ion-input>
+            <div v-for="(errorMessage) in user.password.errors" v-bind:data="errorMessage" v-bind:key="errorMessage.index">
+              <span class="validationMessage">{{errorMessage}}</span>
+            </div>
+          </ion-item>
 
-                    <ion-button v-on:click="login">Log In</ion-button>
-                </ion-list>
-            </ion-content>
-        </ion-page>
-    </div>
+          <ion-button v-on:click="login">Log In</ion-button>
+        </ion-list>
+      </ion-content>
+    </ion-page>
+  </div>
 </template>
 
 <script>
 import db from "../firestore/firebaseInit";
 import firebase from "firebase";
+import { mapMutations } from 'vuex'
 
 export default {
   name: 'login',
@@ -57,6 +58,9 @@ export default {
     };
   },
   methods: {
+    ...mapMutations([
+      'UPDATE_ISLOGGED_IN'
+    ]),
     validation: function(e) {
       this.errorsBool = false;
       this.user.email.errors = [];
@@ -91,11 +95,13 @@ export default {
         firebase
           .auth()
           .signInWithEmailAndPassword(
-            this.user.email.value,
-            this.user.password.value
+          this.user.email.value,
+          this.user.password.value
           )
           .then(data => {
-            this.$router.push("/music");
+            console.log('eghethtete')
+            this.$store.commit('UPDATE_ISLOGGED_IN', true)
+            this.$router.push("/music")
           });
       }
     }
@@ -104,4 +110,5 @@ export default {
 </script>
 
 <style>
+
 </style>

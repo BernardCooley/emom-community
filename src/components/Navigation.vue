@@ -10,24 +10,27 @@
 
 <script>
 import firebase from "firebase"
+import { mapState, mapMutations } from 'vuex'
 
 export default {
     name: 'navigation',
     data: function() {
         return {
-            isLoggedIn: false,
             currentUser: null
         }
     },
     created() {
         if(firebase.auth().currentUser) {
-            this.isLoggedIn = true
+            this.$store.commit('UPDATE_ISLOGGED_IN', true)
             this.currentUser = firebase.auth().currentUser.artistName
+        }else {
+            this.$store.commit('UPDATE_ISLOGGED_IN', false)
         }
     },
     methods: {
         logout: function() {
             firebase.auth().signOut().then(() => {
+                this.$store.commit('UPDATE_ISLOGGED_IN', false)
                 this.$router.push('/login')
             })
         },
@@ -41,6 +44,11 @@ export default {
                 this.$router.push('/register')
             })
         }
+    },
+    computed: {
+        ...mapState([
+            'isLoggedIn'
+        ])
     }
 }
 </script>
