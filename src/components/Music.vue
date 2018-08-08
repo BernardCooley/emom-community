@@ -1,32 +1,24 @@
 <template>
-    <ion-page>
-        <ion-header>
-            <ion-toolbar class="toolbar-md-primary">
-                <ion-title>Shared tracks</ion-title>
-            </ion-toolbar>
-        </ion-header>
-
-        <ion-content class="content" v-if="dataLoaded">
-            <ion-list v-for="(track, index) in tracks" v-bind:data="track" v-bind:key="track.index">
-                <ion-card class="ionCard">
-                    <ion-card-header>
-                        <h4>Artist: {{track.artist}}</h4>
-                        <h4>Title: {{track.title}}</h4>
-                    </ion-card-header>
-                    <div id="audio" class="player-wrapper">
-                        <audio-player v-bind:file='track.trackUrl' v-bind:artist='track.artist' v-bind:title='track.title' v-bind:artworkUrl='track.artworkUrl'></audio-player>
-                    </div>
-                </ion-card>
-            </ion-list>
-        </ion-content>
-    </ion-page>
+    <ion-content class="content" v-if="dataLoaded">
+        <ion-list v-for="(track, index) in tracks" v-bind:data="track" v-bind:key="track.index">
+            <ion-card class="ionCard">
+                <ion-card-header>
+                    <h4>Artist: {{track.artist}}</h4>
+                    <h4>Title: {{track.title}}</h4>
+                </ion-card-header>
+                <div id="audio" class="player-wrapper">
+                    <audio-player v-bind:file='track.trackUrl' v-bind:artist='track.artist' v-bind:title='track.title' v-bind:artworkUrl='track.artworkUrl'></audio-player>
+                </div>
+            </ion-card>
+        </ion-list>
+    </ion-content>
 </template>
 
 <script>
 
 import AudioPlayer from './AudioPlayer'
-import db from "../firestore/firebaseInit";
-import firebase from "firebase";
+import db from "../firestore/firebaseInit"
+import firebase from "firebase"
 
 export default {
     name: 'music',
@@ -52,7 +44,7 @@ export default {
                     }
                     this.tracks.push(data)
                 })
-                if(this.tracks) {
+                if (this.tracks) {
                     this.dataLoaded = true
                 }
             })
@@ -65,7 +57,6 @@ export default {
         this.loadTracks();
     }
 }
-
 </script>
 
 <style>
@@ -85,5 +76,12 @@ export default {
 
 .card-header {
     background-color: #F4F4F4;
+}
+
+.loggedInUser {
+    float: right;
+    z-index: 5;
+    font-size: 15px;
+    color: white;
 }
 </style>

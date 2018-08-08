@@ -16,7 +16,7 @@ let router = new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: 'Home',
       component: Home,
       meta: {
         requiresGuest: true
@@ -24,7 +24,7 @@ let router = new Router({
     },
     {
       path: '/music',
-      name: 'music',
+      name: 'Music',
       component: Music,
       meta: {
         requiresAuth: true
@@ -32,7 +32,7 @@ let router = new Router({
     },
     {
       path: '/login',
-      name: 'login',
+      name: 'Login',
       component: Login,
       meta: {
         requiresGuest: true
@@ -40,7 +40,7 @@ let router = new Router({
     },
     {
       path: '/register',
-      name: 'register',
+      name: 'Register',
       component: Register,
       meta: {
         requiresGuest: true
@@ -48,7 +48,7 @@ let router = new Router({
     },
     {
       path: '/add-track',
-      name: 'add-track',
+      name: 'Add Track',
       component: AddTrack,
       meta: {
         requiresAuth: true

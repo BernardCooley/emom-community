@@ -1,35 +1,27 @@
 <template>
   <div class="loginContainer">
-    <ion-page>
-      <ion-header>
-        <ion-toolbar class="toolbar-md-primary">
-          <ion-title>Login</ion-title>
-        </ion-toolbar>
-      </ion-header>
+    <ion-content class="content">
 
-      <ion-content class="content">
+      <ion-list>
+        <ion-item>
+          <ion-label for="email">Email</ion-label>
+          <ion-input type="text" id="email" v-bind:value="user.email.value" v-on:input="user.email.value = $event.target.value"></ion-input>
+          <div v-for="(errorMessage) in user.email.errors" v-bind:data="errorMessage" v-bind:key="errorMessage.index">
+            <span class="validationMessage">{{errorMessage}}</span>
+          </div>
+        </ion-item>
 
-        <ion-list>
-          <ion-item>
-            <ion-label for="email">Email</ion-label>
-            <ion-input type="text" id="email" v-bind:value="user.email.value" v-on:input="user.email.value = $event.target.value"></ion-input>
-            <div v-for="(errorMessage) in user.email.errors" v-bind:data="errorMessage" v-bind:key="errorMessage.index">
-              <span class="validationMessage">{{errorMessage}}</span>
-            </div>
-          </ion-item>
+        <ion-item>
+          <ion-label for="password">Password</ion-label>
+          <ion-input type="password" id="password" v-bind:value="user.password.value" v-on:input="user.password.value = $event.target.value"></ion-input>
+          <div v-for="(errorMessage) in user.password.errors" v-bind:data="errorMessage" v-bind:key="errorMessage.index">
+            <span class="validationMessage">{{errorMessage}}</span>
+          </div>
+        </ion-item>
 
-          <ion-item>
-            <ion-label for="password">Password</ion-label>
-            <ion-input type="password" id="password" v-bind:value="user.password.value" v-on:input="user.password.value = $event.target.value"></ion-input>
-            <div v-for="(errorMessage) in user.password.errors" v-bind:data="errorMessage" v-bind:key="errorMessage.index">
-              <span class="validationMessage">{{errorMessage}}</span>
-            </div>
-          </ion-item>
-
-          <ion-button v-on:click="login">Log In</ion-button>
-        </ion-list>
-      </ion-content>
-    </ion-page>
+        <ion-button v-on:click="login">Log In</ion-button>
+      </ion-list>
+    </ion-content>
   </div>
 </template>
 
@@ -79,8 +71,6 @@ export default {
         this.user.password.errors.push("Password required.");
       }
 
-      console.log(this.user);
-
       for (var x in this.user) {
         if (this.user[x].errors.length > 0) {
           this.errorsBool = true;
@@ -99,7 +89,6 @@ export default {
           this.user.password.value
           )
           .then(data => {
-            console.log('eghethtete')
             this.$store.commit('UPDATE_ISLOGGED_IN', true)
             this.$router.push("/music")
           });

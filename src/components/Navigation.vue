@@ -1,9 +1,9 @@
 <template>
     <div class="navigationContainer">
-        <div class="navItemsContainer">
-            <ion-button class="navButton" v-if="!isLoggedIn" v-on:click="login">Login</ion-button>
-            <ion-button class="navButton" v-if="!isLoggedIn" v-on:click="register">Register</ion-button>
-            <ion-button class="navButton" v-if="isLoggedIn" v-on:click="logout">Logout</ion-button>
+        <div class="navigationItemsContainer">
+            <ion-button class="navigationButton" v-if="!isLoggedIn" v-on:click="login">Login</ion-button>
+            <ion-button class="navigationButton" v-if="!isLoggedIn" v-on:click="register">Register</ion-button>
+            <ion-button class="navigationButton" v-if="isLoggedIn" v-on:click="logout">Logout</ion-button>
         </div>
     </div>
 </template>
@@ -14,15 +14,10 @@ import { mapState, mapMutations } from 'vuex'
 
 export default {
     name: 'navigation',
-    data: function() {
-        return {
-            currentUser: null
-        }
-    },
     created() {
         if(firebase.auth().currentUser) {
             this.$store.commit('UPDATE_ISLOGGED_IN', true)
-            this.currentUser = firebase.auth().currentUser.artistName
+            this.$store.commit('UPDATE_LOGGED_IN_USER', firebase.auth().currentUser.email)
         }else {
             this.$store.commit('UPDATE_ISLOGGED_IN', false)
         }
@@ -35,14 +30,10 @@ export default {
             })
         },
         login: function() {
-            firebase.auth().signOut().then(() => {
-                this.$router.push('/login')
-            })
+            this.$router.push('/login')
         },
         register: function() {
-            firebase.auth().signOut().then(() => {
-                this.$router.push('/register')
-            })
+            this.$router.push('/register')
         }
     },
     computed: {
@@ -62,7 +53,7 @@ export default {
     width: 100%;
 }
 
-.navItemsContainer {
+.navigationItemsContainer {
     width: 100%;
     height: 100%;
     padding: 0;
@@ -71,7 +62,7 @@ export default {
     display: flex;
 }
 
-.navButton {
+.navigationButton {
     width: 100%;
     height: 100%;
     border-radius: 0;
