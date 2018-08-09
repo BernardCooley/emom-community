@@ -1,8 +1,8 @@
 <template>
   <div class="appContainer">
-    <ion-header><ion-toolbar class="toolbar-md-primary"></ion-toolbar></ion-header>
+    <!-- <ion-header><ion-toolbar class="toolbar-md-primary"></ion-toolbar></ion-header> -->
 
-    <navigation />
+    <!-- <navigation /> -->
     <ion-app>
       <router-view />
     </ion-app>

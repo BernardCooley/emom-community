@@ -1,43 +1,45 @@
 <template>
   <div class="addTrackContainer">
-    <ion-content class="content">
+    <ion-page>
+      <ion-content class="content">
 
-      <ion-list>
-        <ion-item>
-          <ion-label for="artist">Artist</ion-label>
-          <ion-input type="text" id="artist" v-bind:value="track.artist.value" v-on:input="track.artist.value = $event.target.value"></ion-input>
-          <div v-for="(errorMessage) in track.artist.errors" v-bind:data="errorMessage" v-bind:key="errorMessage.index">
-            <span class="validationMessage">{{errorMessage}}</span>
-          </div>
-        </ion-item>
+        <ion-list>
+          <ion-item>
+            <ion-label for="artist">Artist</ion-label>
+            <ion-input type="text" id="artist" v-bind:value="track.artist.value" v-on:input="track.artist.value = $event.target.value"></ion-input>
+            <div v-for="(errorMessage) in track.artist.errors" v-bind:data="errorMessage" v-bind:key="errorMessage.index">
+              <span class="validationMessage">{{errorMessage}}</span>
+            </div>
+          </ion-item>
 
-        <ion-item>
-          <ion-label for="trackTitle">Title</ion-label>
-          <ion-input type="text" id="trackTitle" v-bind:value="track.title.value" v-on:input="track.title.value = $event.target.value"></ion-input>
-          <div v-for="(errorMessage) in track.title.errors" v-bind:data="errorMessage" v-bind:key="errorMessage.index">
-            <span class="validationMessage">{{errorMessage}}</span>
-          </div>
-        </ion-item>
+          <ion-item>
+            <ion-label for="trackTitle">Title</ion-label>
+            <ion-input type="text" id="trackTitle" v-bind:value="track.title.value" v-on:input="track.title.value = $event.target.value"></ion-input>
+            <div v-for="(errorMessage) in track.title.errors" v-bind:data="errorMessage" v-bind:key="errorMessage.index">
+              <span class="validationMessage">{{errorMessage}}</span>
+            </div>
+          </ion-item>
 
-        <ion-item>
-          <ion-label for="trackUrl">Track Url</ion-label>
-          <ion-input type="text" id="trackUrl" v-bind:value="track.trackUrl.value" v-on:input="track.trackUrl.value = $event.target.value"></ion-input>
-          <div v-for="(errorMessage) in track.trackUrl.errors" v-bind:data="errorMessage" v-bind:key="errorMessage.index">
-            <span class="validationMessage">{{errorMessage}}</span>
-          </div>
-        </ion-item>
+          <ion-item>
+            <ion-label for="trackUrl">Track Url</ion-label>
+            <ion-input type="text" id="trackUrl" v-bind:value="track.trackUrl.value" v-on:input="track.trackUrl.value = $event.target.value"></ion-input>
+            <div v-for="(errorMessage) in track.trackUrl.errors" v-bind:data="errorMessage" v-bind:key="errorMessage.index">
+              <span class="validationMessage">{{errorMessage}}</span>
+            </div>
+          </ion-item>
 
-        <ion-item>
-          <ion-label for="artworkUrl">Artwork Url (optional)</ion-label>
-          <ion-input type="text" id="artworkUrl" v-bind:value="track.artworkUrl.value" v-on:input="track.artworkUrl.value = $event.target.value"></ion-input>
-          <div v-for="(errorMessage) in track.artworkUrl.errors" v-bind:data="errorMessage" v-bind:key="errorMessage.index">
-            <span class="validationMessage">{{errorMessage}}</span>
-          </div>
-        </ion-item>
+          <ion-item>
+            <ion-label for="artworkUrl">Artwork Url (optional)</ion-label>
+            <ion-input type="text" id="artworkUrl" v-bind:value="track.artworkUrl.value" v-on:input="track.artworkUrl.value = $event.target.value"></ion-input>
+            <div v-for="(errorMessage) in track.artworkUrl.errors" v-bind:data="errorMessage" v-bind:key="errorMessage.index">
+              <span class="validationMessage">{{errorMessage}}</span>
+            </div>
+          </ion-item>
 
-        <ion-button v-on:click="addTrack">Add Track</ion-button>
-      </ion-list>
-    </ion-content>
+          <ion-button v-on:click="addTrack">Add Track</ion-button>
+        </ion-list>
+      </ion-content>
+    </ion-page>
   </div>
 </template>
 
@@ -46,7 +48,7 @@ import db from "../firestore/firebaseInit";
 import firebase from "firebase";
 
 export default {
-  name: 'add-track',
+  name: "add-track",
   data: function() {
     return {
       track: {
@@ -103,7 +105,7 @@ export default {
     addTrack: function() {
       this.validation();
       if (!this.errorsBool) {
-        console.log('Adding track.....')
+        console.log("Adding track.....");
         db
           .collection("tracks")
           .add({
