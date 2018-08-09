@@ -1,7 +1,7 @@
 <template>
     <ion-page>
         <ion-content class="content" v-if="dataLoaded">
-            <ion-list v-for="(track, index) in tracks" v-bind:data="track" v-bind:key="track.index">
+            <ion-list v-for="track in tracks" v-bind:data="track" v-bind:key="track.index">
                 <ion-card class="ionCard">
                     <ion-card-header>
                         <h4>Artist: {{track.artist}}</h4>
@@ -82,7 +82,7 @@ export default {
 
 .loggedInUser {
   float: right;
-  z-index: 5;
+  z-index: 1;
   font-size: 15px;
   color: white;
 }

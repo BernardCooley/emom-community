@@ -1,8 +1,8 @@
 <template>
   <div class="registerContainer">
     <ion-page>
+      <ion-header><ion-toolbar class="toolbar-md-primary"></ion-toolbar></ion-header>
       <ion-content class="content">
-
         <ion-list>
           <ion-item>
 

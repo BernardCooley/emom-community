@@ -1,6 +1,7 @@
 <template>
   <div class="loginContainer">
     <ion-page>
+      
       <ion-content class="content">
         <ion-list>
           <ion-item>
@@ -98,4 +99,7 @@ export default {
 </script>
 
 <style>
+.transparent {
+  background-color: transparent;
+}
 </style>

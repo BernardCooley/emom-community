@@ -3,7 +3,6 @@
         <div class="navigationItemsContainer">
             <ion-button class="navigationButton" v-if="!isLoggedIn" v-on:click="login">Login</ion-button>
             <ion-button class="navigationButton" v-if="!isLoggedIn" v-on:click="register">Register</ion-button>
-            <ion-button class="navigationButton" v-if="isLoggedIn" v-on:click="logout">Logout</ion-button>
         </div>
     </div>
 </template>
@@ -23,12 +22,6 @@ export default {
         }
     },
     methods: {
-        logout: function() {
-            firebase.auth().signOut().then(() => {
-                this.$store.commit('UPDATE_ISLOGGED_IN', false)
-                this.$router.push('/login')
-            })
-        },
         login: function() {
             this.$router.push('/login')
         },
@@ -47,7 +40,7 @@ export default {
 <style>
 .navigationContainer {
     height: 50px;
-    z-index: 1;
+    z-index: 5;
     position: fixed;
     bottom: 0;
     width: 100%;

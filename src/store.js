@@ -19,7 +19,7 @@ export default new Vuex.Store({
             state.loggedInUser = value
         },
         TOGGLE_MENU: (state, value) => {
-            state.menuDisplayed = !state.menuDisplayed
+            state.menuDisplayed = value
         },
         UPDATE_PAGE_TITLE: (state, value) => {
             state.pageTitle = value

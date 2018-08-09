@@ -1,6 +1,8 @@
 <template>
     <div class="homeContainer">
         <ion-page>
+            <ion-header><ion-toolbar class="toolbar-md-primary"></ion-toolbar></ion-header>
+            
             <ion-content class="content">
                 <p>
                     Welcome to the Electronic Music Open Mic community.

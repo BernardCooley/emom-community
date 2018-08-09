@@ -1,8 +1,9 @@
 <template>
   <div class="addTrackContainer">
     <ion-page>
+      <ion-header><ion-toolbar class="toolbar-md-primary"></ion-toolbar></ion-header>
+      
       <ion-content class="content">
-
         <ion-list>
           <ion-item>
             <ion-label for="artist">Artist</ion-label>
