@@ -40,7 +40,7 @@ export default {
 <style>
 .navigationContainer {
     height: 50px;
-    z-index: 5;
+    z-index: 2;
     position: fixed;
     bottom: 0;
     width: 100%;

@@ -13,6 +13,7 @@ import '../firestore/firebaseInit'
 Vue.use(Router);
 
 let router = new Router({
+  linkExactActiveClass: 'is-active',
   routes: [
     {
       path: '/',

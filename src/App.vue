@@ -2,6 +2,7 @@
     <div class="appContainer">
         <ion-app>
             <app-header />
+            <slide-menu />
             <div class="pageContainer">
                 <router-view />
             </div>
@@ -13,12 +14,15 @@
 <script>
 import Navigation from "./components/Navigation";
 import AppHeader from "./components/AppHeader";
+import SlideMenu from "./components/SlideMenu";
+import { directive as onClickaway } from 'vue-clickaway';
 
 export default {
-  components: {
-    Navigation,
-    AppHeader
-  }
+    components: {
+        Navigation,
+        AppHeader,
+        SlideMenu
+    }
 };
 </script>
 

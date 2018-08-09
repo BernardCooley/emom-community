@@ -1,17 +1,19 @@
 <template>
-    <div class="headerContainer">
-        <div>{{pageTitle}}</div>
-        <div class="navMenu">
-            <div v-if="!menuDisplayed">
-                <button class="toggleButton" v-on:click="openMenu">
-                    <img src="../assets/icons/hamburger_menu_icon.svg">
-                </button>
-            </div>
-            <div v-else>
-                <slide-menu></slide-menu>
-            </div>
-        </div>
+  <div class="headerContainer">
+    <h3 class="headerTitle">{{pageTitle}}</h3>
+    <transition name="fade">
+    <div v-if="!menuDisplayed">
+      <button class="toggleButton" v-on:click="openMenu">
+        <img src="../assets/icons/hamburger_menu_icon.svg">
+      </button>
     </div>
+    </transition>
+    <!--<transition name="fade">
+    <div v-if="menuDisplayed">
+      <button class="toggleButton close" v-on:click="closeMenu">Close</button>
+    </div>
+    </transition>-->
+  </div>
 </template>
 
 <script>
@@ -27,7 +29,10 @@ export default {
     ...mapMutations(["TOGGLE_MENU", "UPDATE_PAGE_TITLE"]),
     openMenu: function() {
       this.$store.commit("TOGGLE_MENU", true);
-    }
+    },
+    closeMenu: function() {
+      this.$store.commit("TOGGLE_MENU", false);
+    },
   },
   computed: {
     ...mapState(["menuDisplayed", "pageTitle"])
@@ -45,7 +50,7 @@ export default {
 
 <style>
 .headerContainer {
-  z-index: 11;
+  z-index: 2;
   height: 50px;
   box-sizing: border-box;
   position: relative;
@@ -60,11 +65,25 @@ export default {
   contain: content;
   background-color: #488aff;
 }
+
 .toggleButton img {
-    background-color: transparent;
+  background-color: transparent;
+  padding-right: 8px;
 }
 
 .toggleButton {
-    background-color: transparent;
+  background-color: transparent;
+  outline: none;
+}
+
+.toggleButton.close {
+  font-size: 18px;
+  padding-top: 8px;
+}
+
+.headerTitle {
+  color: white;
+  padding-left: 15px;
+  margin-top: 13px;
 }
 </style>

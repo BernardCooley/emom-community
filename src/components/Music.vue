@@ -84,7 +84,6 @@ export default {
 
 .loggedInUser {
   float: right;
-  z-index: 1;
   font-size: 15px;
   color: white;
 }
