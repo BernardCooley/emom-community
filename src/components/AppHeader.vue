@@ -8,11 +8,6 @@
       </button>
     </div>
     </transition>
-    <!--<transition name="fade">
-    <div v-if="menuDisplayed">
-      <button class="toggleButton close" v-on:click="closeMenu">Close</button>
-    </div>
-    </transition>-->
   </div>
 </template>
 

@@ -53,22 +53,10 @@ export default {
   data: function() {
     return {
       track: {
-        artist: {
-          value: null,
-          errors: []
-        },
-        title: {
-          value: null,
-          errors: []
-        },
-        trackUrl: {
-          value: null,
-          errors: []
-        },
-        artworkUrl: {
-          value: null,
-          errors: []
-        }
+        artist: { value: null, errors: [] },
+        title: {value: null, errors: [] },
+        trackUrl: {value: null, errors: [] },
+        artworkUrl: {value: null, errors: [] }
       },
       errorsBool: null,
       userID: null,
@@ -95,8 +83,6 @@ export default {
         this.track.trackUrl.errors.push("Track Url required.");
       }
 
-      console.log(this.track);
-
       for (var x in this.track) {
         if (this.track[x].errors.length > 0) {
           this.errorsBool = true;
@@ -106,7 +92,6 @@ export default {
     addTrack: function() {
       this.validation();
       if (!this.errorsBool) {
-        console.log("Adding track.....");
         db
           .collection("tracks")
           .add({
@@ -133,5 +118,10 @@ export default {
 .validationMessage {
   color: red;
   text-align: center;
+}
+
+.native-input:active,
+.native-input:focus {
+  outline: none;
 }
 </style>
